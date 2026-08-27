@@ -97,6 +97,18 @@ st.markdown("""
         color: #E8E3D9 !important;
         border-color: #1E3525 !important;
     }
+    /* 引言卡片 */
+    .quote-card {
+        background-color: #FFFFFF;
+        border-left: 5px solid #C49A45;
+        border-radius: 12px;
+        padding: 1.2rem 1.4rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        line-height: 1.7;
+        font-size: 0.95rem;
+        color: #3B4B3D;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -199,22 +211,40 @@ def calculate_ming_gong(year, gender):
             "prompt": "今天你最想給自己的一句溫柔話語是什麼？寫下三個字詞。"
         }
 
-# 頂部視覺橫幅
+# --- 一、頂部品牌識別與能量調頻視覺 ---
 st.markdown("""
-<div class="hero-banner">
-    <div style="font-size: 2.2rem; margin-bottom: 8px;">🌿</div>
-    <h1 style="font-size: 1.55rem; font-weight: bold; letter-spacing: 1px; color: #F5DF9E; margin: 0 0 0.5rem 0;">
-        探索你與生俱來的先天本質與盲點
+<div style="background-color: #2D5A3F; border-radius: 16px; padding: 24px 20px; text-align: center; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+    <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 12px;">
+        <svg width="52" height="52" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));">
+            <circle cx="50" cy="50" r="46" fill="#1C3826" opacity="0.6"/>
+            <circle cx="50" cy="50" r="39" stroke="#F5DF9E" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/>
+            <path d="M50 16 L54 44 L68 40 L56 50 L68 60 L54 56 L50 84 L46 56 L32 60 L44 50 L32 40 L46 44 Z" fill="#6EE7B7" opacity="0.9"/>
+            <path d="M50 12 L55 50 L50 54 L45 50 Z" fill="#F5DF9E"/>
+            <path d="M50 88 L55 50 L50 46 L45 50 Z" fill="#A7F3D0"/>
+            <circle cx="50" cy="50" r="10" fill="#2D5A3F" stroke="#F5DF9E" stroke-width="2"/>
+            <circle cx="50" cy="50" r="4" fill="#FDE68A"/>
+        </svg>
+    </div>
+    <h1 style="font-size: 1.65rem; font-weight: bold; letter-spacing: 1.5px; color: #F5DF9E; margin: 0 0 0.5rem 0; text-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+        生命密碼 能量調頻
     </h1>
-    <p style="font-size: 0.92rem; color: #E8F5ED; margin: 0; line-height: 1.6;">
-        綠藝國際學苑 ╳ 老臣聊心室 ╳ 生命密碼能量調頻
+    <p style="font-size: 0.95rem; color: #E8F5ED; letter-spacing: 0.8px; font-weight: 300; margin: 0 0 0.8rem 0; opacity: 0.95; line-height: 1.6;">
+        以先天密碼洞悉本質 ✕ 以靜心書寫對齊頻率 ✕ 以自然綠植補足能量
+    </p>
+    <div style="width: 100px; height: 1px; background: rgba(210, 235, 218, 0.35); margin: 0.7rem auto;"></div>
+    <p style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); letter-spacing: 1.2px; font-family: monospace, sans-serif; margin: 0; user-select: none;">
+        綠藝國際學苑 ✕ 老臣聊心室 LUYILIFE ｜ 聽你的心，陪你調頻 ｜ 設計者：陳信忠 (老臣/Alan)
     </p>
 </div>
 """, unsafe_allow_html=True)
 
+# 老臣心靈引言卡片
 st.markdown("""
-> 「八字與數字只是指引天賦與盲點的『地圖』，而非限制生命的『框架』。真正的智慧在於調和能量與修煉心性。」
-""")
+<div class="quote-card">
+    <b>老臣聊心室 心靈引言：</b><br>
+    『命宮星曜只是靈魂的「GPS 起點」，看懂外在元神、內在靈魂本能與社會格局的合盤交織，才是你完整的「生命地圖」。真正的調頻，在於透過靜心書寫覺察盲點、藉由綠植五行能量安頓身心，由內而外活出靈魂的原廠設定。』
+</div>
+""", unsafe_allow_html=True)
 
 # 表單容器
 with st.container():
