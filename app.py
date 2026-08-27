@@ -262,11 +262,18 @@ with st.container():
         value=date(1990, 1, 1)
     )
 
-# 判斷使用者是否點擊按鈕或已觸發計算
+# 1. 按鈕上方引導提示
+st.markdown("""
+<p style="font-size: 0.88rem; color: #4B6351; margin-top: 0.9rem; margin-bottom: 0.6rem; text-align: center; line-height: 1.5;">
+    ✨ 準備好探索專屬於你的靈魂原廠設定了嗎？點擊下方按鈕，老臣將為你解鎖守護星曜的天賦、思維盲點與安定能量方位。
+</p>
+""", unsafe_allow_html=True)
+
+# 2. 判斷使用者是否點擊按鈕或已觸發計算
 if "calculated" not in st.session_state:
     st.session_state.calculated = False
 
-submit_btn = st.button("✨ 立即解鎖我的天賦地圖")
+submit_btn = st.button("✨ 立即解鎖我的命宮星曜")
 if submit_btn:
     st.session_state.calculated = True
 
@@ -281,7 +288,8 @@ if st.session_state.calculated:
     display_name = name.strip() if name and name.strip() else "朋友"
     
     st.markdown("---")
-    st.markdown(f"### 💌 嗨，{display_name}！這是老臣為你解讀的原廠天性：")
+    # 3. 計算完成後的引言標題
+    st.markdown(f"### 💌 嗨，{display_name}！這是老臣為你解讀的命宮星曜本質：")
     
     st.markdown(f"""
     <div class="card">
