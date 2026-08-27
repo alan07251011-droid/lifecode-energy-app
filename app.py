@@ -8,7 +8,7 @@ from datetime import datetime, date
 
 # 1. 頁面基本配置（必須是第一個 Streamlit 指令）
 st.set_page_config(
-    page_title="探索你與生俱來的先天本質與盲點｜老臣聊心室",
+    page_title="生命密碼 能量調頻 ｜ 老臣聊心室",
     page_icon="🌿",
     layout="centered"
 )
