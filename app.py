@@ -5,52 +5,23 @@
 """
 import streamlit as st
 from datetime import datetime, date
-import traceback
 
-# 1. 頁面基本配置（必須置於最頂部第一行）
+# 1. 頁面基本配置（必須是第一個 Streamlit 指令）
 st.set_page_config(
     page_title="探索你與生俱來的先天本質與盲點｜老臣聊心室",
     page_icon="🌿",
     layout="centered"
 )
 
-# 2. 初始化 Session State 變數，杜絕 KeyError
-if "user_name" not in st.session_state:
-    st.session_state.user_name = ""
-if "gender" not in st.session_state:
-    st.session_state.gender = "女 (坤命)"
-if "birth_date" not in st.session_state:
-    st.session_state.birth_date = date(1990, 1, 1)
-if "calculated" not in st.session_state:
-    st.session_state.calculated = False
-if "res_data" not in st.session_state:
-    st.session_state.res_data = None
-
-# 3. 自訂森林系療癒 CSS（移除多餘註解，防止 Streamlit 解析器誤報）
+# 2. 自訂森林系療癒 CSS
 st.markdown("""
-    <style>
+<style>
     .stApp {
         background-color: #F7F4EE;
         color: #2C3E2E;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
     }
     
-    /* 頂部 Header & 預設元件隱藏 */
-    header[data-testid="stHeader"], header {
-        display: none !important;
-        height: 0 !important;
-        pointer-events: none !important;
-        visibility: hidden !important;
-    }
-    #MainMenu, footer, [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"], .viewerBadge_container__1QSob {
-        display: none !important;
-        visibility: hidden !important;
-        pointer-events: none !important;
-        height: 0 !important;
-        width: 0 !important;
-    }
-    
-    /* 綠意主橫幅卡片 */
     .hero-banner {
         background: linear-gradient(135deg, #2D4F38 0%, #3D6A4E 60%, #5B886B 100%);
         color: #FFFFFF;
@@ -62,7 +33,6 @@ st.markdown("""
         border: 1px solid rgba(255, 255, 255, 0.15);
     }
     
-    /* 表單計算按鈕 */
     .stButton>button {
         background-color: #2D4F38;
         color: white !important;
@@ -72,8 +42,7 @@ st.markdown("""
         width: 100%;
         border: none;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        cursor: pointer !important;
-        pointer-events: auto !important;
+        cursor: pointer;
         transition: all 0.2s ease;
     }
     .stButton>button:hover, .stButton>button:active {
@@ -81,7 +50,6 @@ st.markdown("""
         color: #E8E3D9 !important;
     }
     
-    /* 資訊卡片樣式 */
     .card {
         background-color: #FFFFFF;
         padding: 1.4rem;
@@ -104,7 +72,6 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
-    /* 原生 st.link_button 美化 */
     .stLinkButton {
         width: 100% !important;
     }
@@ -123,7 +90,6 @@ st.markdown("""
         display: flex !important;
         align-items: center !important;
         cursor: pointer !important;
-        pointer-events: auto !important;
         text-decoration: none !important;
     }
     .stLinkButton > a:hover, .stLinkButton > a:active {
@@ -131,24 +97,19 @@ st.markdown("""
         color: #E8E3D9 !important;
         border-color: #1E3525 !important;
     }
-    
-    /* 確保互動元素可點擊 */
-    a, button, input, select {
-        pointer-events: auto !important;
-        cursor: pointer !important;
-    }
-    </style>
+</style>
 """, unsafe_allow_html=True)
 
 # 官方 LINE 原生 URL
 LINE_OFFICIAL_URL = "https://line.me/R/ti/p/@mir4855b"
 
-def calculate_ming_gong(year: int, gender: str) -> dict:
+def calculate_ming_gong(year, gender):
     """
     計算九星命宮守護星、先天特質、思維盲點與調頻綠植
     """
     try:
-        digits_sum = sum(int(d) for d in str(year))
+        y_int = int(year)
+        digits_sum = sum(int(d) for d in str(y_int))
         while digits_sum > 9:
             digits_sum = sum(int(d) for d in str(digits_sum))
         
@@ -228,7 +189,7 @@ def calculate_ming_gong(year: int, gender: str) -> dict:
             }
         }
         return stars.get(gua_num, stars[1])
-    except Exception as e:
+    except Exception:
         return {
             "title": "命宮守護星・調和能量",
             "trait": "具備深層感知力與自我覺察潛能，順應自然節奏蓄積能量。",
@@ -238,192 +199,181 @@ def calculate_ming_gong(year: int, gender: str) -> dict:
             "prompt": "今天你最想給自己的一句溫柔話語是什麼？寫下三個字詞。"
         }
 
-# --- 主程式入口（包含全域防禦機制） ---
-try:
-    # 頂部視覺橫幅
+# 頂部視覺橫幅
+st.markdown("""
+<div class="hero-banner">
+    <div style="font-size: 2.2rem; margin-bottom: 8px;">🌿</div>
+    <h1 style="font-size: 1.55rem; font-weight: bold; letter-spacing: 1px; color: #F5DF9E; margin: 0 0 0.5rem 0;">
+        探索你與生俱來的先天本質與盲點
+    </h1>
+    <p style="font-size: 0.92rem; color: #E8F5ED; margin: 0; line-height: 1.6;">
+        綠藝國際學苑 ╳ 老臣聊心室 ╳ 生命密碼能量調頻
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+> 「八字與數字只是指引天賦與盲點的『地圖』，而非限制生命的『框架』。真正的智慧在於調和能量與修煉心性。」
+""")
+
+# 表單容器
+with st.container():
+    col1, col2 = st.columns(2)
+    with col1:
+        name = st.text_input("如何稱呼您？", placeholder="例如：Alan 或 小晴")
+    with col2:
+        gender = st.selectbox("性別", ["女 (坤命)", "男 (乾命)"])
+    
+    # 支援 date 物件與安全預設值
+    birth_date = st.date_input(
+        "西元出生年月日",
+        min_value=date(1940, 1, 1),
+        max_value=date(2026, 12, 31),
+        value=date(1990, 1, 1)
+    )
+
+# 判斷使用者是否點擊按鈕或已觸發計算
+if "calculated" not in st.session_state:
+    st.session_state.calculated = False
+
+submit_btn = st.button("✨ 立即解鎖我的天賦地圖")
+if submit_btn:
+    st.session_state.calculated = True
+
+if st.session_state.calculated:
+    # 提取年份
+    if isinstance(birth_date, (list, tuple)):
+        chosen_date = birth_date[0] if len(birth_date) > 0 else date(1990, 1, 1)
+    else:
+        chosen_date = birth_date or date(1990, 1, 1)
+    
+    res = calculate_ming_gong(chosen_date.year, gender)
+    display_name = name.strip() if name and name.strip() else "朋友"
+    
+    st.markdown("---")
+    st.markdown(f"### 💌 嗨，{display_name}！這是老臣為你解讀的原廠天性：")
+    
+    st.markdown(f"""
+    <div class="card">
+        <span class="badge">命宮守護星</span>
+        <h3 style="color:#2D4F38; margin:0 0 8px 0;">{res['title']}</h3>
+        <p style="margin: 6px 0;"><b>🌟 天賦（天性本質）：</b>{res['trait']}</p>
+        <p style="margin: 6px 0; color:#8C4A32;"><b>⚠️ 思維盲點：</b>{res['blind']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div class="card">
+        <span class="badge">自然綠植調頻</span>
+        <h4 style="margin:0 0 6px 0; color:#2D4F38;">🌿 專屬自然綠植：{res['plant']}</h4>
+        <p style="margin: 6px 0;"><b>🧭 居家/辦公能量方位：</b>建議擺放於 <b>{res['pos']}</b></p>
+        <p style="font-size:0.9rem; color:#555; margin: 4px 0 0 0;">透過每天的觀照與觸摸植物的「指尖定力」，讓大自然的穩定頻率安撫大腦的雜訊。</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div class="card">
+        <span class="badge">今日靜心書寫練習</span>
+        <p style="margin: 6px 0;"><b>📝 引導提問：</b>「{res['prompt']}」</p>
+        <p style="font-size:0.85rem; color:#777; margin: 4px 0 0 0;">拿出筆記本，花 5 分鐘寫下來。書寫是思緒的垃圾桶，倒空了，光才能照進來。</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 底部心靈共振與行動呼籲模組
     st.markdown("""
-    <div class="hero-banner">
-        <div style="font-size: 2.2rem; margin-bottom: 8px;">🌿</div>
-        <h1 style="font-size: 1.55rem; font-weight: bold; letter-spacing: 1px; color: #F5DF9E; margin: 0 0 0.5rem 0;">
-            探索你與生俱來的先天本質與盲點
-        </h1>
-        <p style="font-size: 0.92rem; color: #E8F5ED; margin: 0; line-height: 1.6;">
-            綠藝國際學苑 ╳ 老臣聊心室 ╳ 生命密碼能量調頻
+    <div style="margin-top: 3rem; padding: 2rem 1.5rem; background-color: rgba(35, 71, 50, 0.95); border-radius: 18px; border: 1px solid rgba(16, 185, 129, 0.25); color: #F5F5F4; box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.25); max-width: 680px; margin-left: auto; margin-right: auto; text-align: center;">
+      <div style="margin-bottom: 1.5rem;">
+        <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🌱</div>
+        <h3 style="font-size: 1.25rem; font-weight: bold; color: #FDE68A; letter-spacing: 0.5px; margin: 0 0 0.6rem 0; line-height: 1.4;">
+          受過傷的地方，細心灌溉，依然能長出翠綠的風景
+        </h3>
+        <p style="font-size: 0.95rem; color: rgba(209, 250, 229, 0.9); line-height: 1.65; font-weight: 300; margin: 0;">
+          在這個快節奏的時代，拼命追趕世界太累了。<br>
+          如果今天的生命密碼指引曾為你帶來一絲安頓，請記得：今天，先溫柔地接住你自己。
         </p>
+      </div>
+
+      <div style="width: 70px; height: 1px; background: rgba(52, 211, 153, 0.4); margin: 1.5rem auto;"></div>
+
+      <div style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(52, 211, 153, 0.2); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left; display: flex; flex-direction: column; gap: 0.85rem;">
+        <div style="display: flex; align-items: flex-start; gap: 0.85rem;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: #132E1E; border: 1px solid rgba(253, 230, 138, 0.5); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; margin-top: 2px;">
+            🌿
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.35rem;">
+              <span style="font-size: 1.05rem; font-weight: bold; color: #FDE68A;">陳信忠（老臣 / Alan）</span>
+              <span style="font-size: 0.75rem; padding: 2px 10px; border-radius: 9999px; background: rgba(6, 78, 59, 0.85); color: #A7F3D0; border: 1px solid rgba(5, 150, 105, 0.4); font-weight: 500;">心靈陪伴者</span>
+            </div>
+            <p style="font-size: 0.88rem; color: rgba(231, 229, 228, 0.95); line-height: 1.65; font-weight: 300; margin: 0;">
+              綠藝國際學苑創辦人。於觀音成道日出生，幼年深結佛緣，長期研討宗教信仰與生命密碼；曾任科技企業工程主管與國際園藝治療師，走過生死無常與至親病榻感悟，深信修行在日常柴米油鹽中，以觀音慈悲心法結合理性邏輯與自然調頻，陪你找回靈魂的原廠設定。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://line.me/R/ti/p/@mir4855b" target="_blank" style="display: block; text-decoration: none; padding: 1.15rem 1rem; border-radius: 14px; background: rgba(6, 95, 70, 0.6); border: 1px solid rgba(52, 211, 153, 0.35); margin-bottom: 1.5rem; transition: background 0.2s ease;">
+        <div style="font-size: 0.82rem; font-weight: 600; color: #6EE7B7; margin-bottom: 0.3rem;">
+          💬 綠藝漫活居 官方 LINE@
+        </div>
+        <div style="font-size: 1.05rem; font-weight: bold; color: #FFFFFF; margin-bottom: 0.35rem; line-height: 1.4;">
+          點此進入心靈導航站｜領取免費測算・預約諮詢・探索新書作品
+        </div>
+        <div style="font-size: 0.82rem; color: rgba(214, 211, 209, 0.9); font-weight: 300;">
+          加入後輸入對應關鍵字即可取得你所需要的資訊
+        </div>
+      </a>
+
+      <div style="padding-top: 0.75rem; border-top: 1px solid rgba(16, 185, 129, 0.25);">
+        <p style="font-size: 0.85rem; color: rgba(209, 250, 229, 0.85); line-height: 1.6; font-weight: 300; margin: 0 0 0.85rem 0;">
+          這款免費靈籤與心靈工具由老臣持續自主研發與維運。<br>
+          若這份陪伴對你有所啟發，歡迎隨緣贊助，護持更多心靈工具持續誕生。
+        </p>
+        <a href="https://line.me/R/ti/p/@mir4855b" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; border-radius: 9999px; background: rgba(253, 230, 138, 0.12); color: #FDE68A; border: 1px solid rgba(253, 230, 138, 0.4); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: background 0.2s ease;">
+          <span>☕</span> 隨喜支持・前往 LINE@ 輸入「3」贊助老臣持續研發
+        </a>
+      </div>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("""
-    > 「八字與數字只是指引天賦與盲點的『地圖』，而非限制生命的『框架』。真正的智慧在於調和能量與修煉心性。」
-    """)
-
-    # 使用者輸入表單
-    with st.container():
-        col1, col2 = st.columns(2)
-        with col1:
-            input_name = st.text_input("如何稱呼您？", value=st.session_state.user_name, placeholder="例如：Alan 或 小晴")
-        with col2:
-            gender_options = ["女 (坤命)", "男 (乾命)"]
-            gender_idx = gender_options.index(st.session_state.gender) if st.session_state.gender in gender_options else 0
-            input_gender = st.selectbox("性別", gender_options, index=gender_idx)
-        
-        # 安全取得日期物件
-        default_d = st.session_state.birth_date if isinstance(st.session_state.birth_date, date) else date(1990, 1, 1)
-        raw_birth = st.date_input(
-            "西元出生年月日",
-            min_value=date(1940, 1, 1),
-            max_value=date(2026, 12, 31),
-            value=default_d
-        )
-        
-        # 處理 Streamlit date_input 可能回傳 tuple 的邊界情況
-        if isinstance(raw_birth, (list, tuple)):
-            input_birth = raw_birth[0] if len(raw_birth) > 0 else date(1990, 1, 1)
-        else:
-            input_birth = raw_birth or date(1990, 1, 1)
-
-    if st.button("✨ 立即解鎖我的天賦地圖"):
-        st.session_state.user_name = input_name
-        st.session_state.gender = input_gender
-        st.session_state.birth_date = input_birth
-        st.session_state.res_data = calculate_ming_gong(input_birth.year, input_gender)
-        st.session_state.calculated = True
-        st.rerun()
-
-    # 展示計算結果
-    if st.session_state.calculated and st.session_state.res_data:
-        res = st.session_state.res_data
-        display_name = st.session_state.user_name if st.session_state.user_name else "朋友"
-        
-        st.markdown("---")
-        st.markdown(f"### 💌 嗨，{display_name}！這是老臣為你解讀的原廠天性：")
-        
-        st.markdown(f"""
-        <div class="card">
-            <span class="badge">命宮守護星</span>
-            <h3 style="color:#2D4F38; margin:0 0 8px 0;">{res['title']}</h3>
-            <p style="margin: 6px 0;"><b>🌟 天賦（天性本質）：</b>{res['trait']}</p>
-            <p style="margin: 6px 0; color:#8C4A32;"><b>⚠️ 思維盲點：</b>{res['blind']}</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown(f"""
-        <div class="card">
-            <span class="badge">自然綠植調頻</span>
-            <h4 style="margin:0 0 6px 0; color:#2D4F38;">🌿 專屬自然綠植：{res['plant']}</h4>
-            <p style="margin: 6px 0;"><b>🧭 居家/辦公能量方位：</b>建議擺放於 <b>{res['pos']}</b></p>
-            <p style="font-size:0.9rem; color:#555; margin: 4px 0 0 0;">透過每天的觀照與觸摸植物的「指尖定力」，讓大自然的穩定頻率安撫大腦的雜訊。</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown(f"""
-        <div class="card">
-            <span class="badge">今日靜心書寫練習</span>
-            <p style="margin: 6px 0;"><b>📝 引導提問：</b>「{res['prompt']}」</p>
-            <p style="font-size:0.85rem; color:#777; margin: 4px 0 0 0;">拿出筆記本，花 5 分鐘寫下來。書寫是思緒的垃圾桶，倒空了，光才能照進來。</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # 底部心靈共振與行動呼籲模組（雙端通用穩定放大版）
-        st.markdown("""
-        <div style="margin-top: 3rem; padding: 2rem 1.5rem; background-color: rgba(35, 71, 50, 0.95); border-radius: 18px; border: 1px solid rgba(16, 185, 129, 0.25); color: #F5F5F4; box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.25); max-width: 680px; margin-left: auto; margin-right: auto; text-align: center;">
-          <div style="margin-bottom: 1.5rem;">
-            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🌱</div>
-            <h3 style="font-size: 1.25rem; font-weight: bold; color: #FDE68A; letter-spacing: 0.5px; margin: 0 0 0.6rem 0; line-height: 1.4;">
-              受過傷的地方，細心灌溉，依然能長出翠綠的風景
-            </h3>
-            <p style="font-size: 0.95rem; color: rgba(209, 250, 229, 0.9); line-height: 1.65; font-weight: 300; margin: 0;">
-              在這個快節奏的時代，拼命追趕世界太累了。<br>
-              如果今天的生命密碼指引曾為你帶來一絲安頓，請記得：今天，先溫柔地接住你自己。
-            </p>
-          </div>
-
-          <div style="width: 70px; height: 1px; background: rgba(52, 211, 153, 0.4); margin: 1.5rem auto;"></div>
-
-          <div style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(52, 211, 153, 0.2); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left; display: flex; flex-direction: column; gap: 0.85rem;">
-            <div style="display: flex; align-items: flex-start; gap: 0.85rem;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #132E1E; border: 1px solid rgba(253, 230, 138, 0.5); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; margin-top: 2px;">
-                🌿
-              </div>
-              <div>
-                <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.35rem;">
-                  <span style="font-size: 1.05rem; font-weight: bold; color: #FDE68A;">陳信忠（老臣 / Alan）</span>
-                  <span style="font-size: 0.75rem; padding: 2px 10px; border-radius: 9999px; background: rgba(6, 78, 59, 0.85); color: #A7F3D0; border: 1px solid rgba(5, 150, 105, 0.4); font-weight: 500;">心靈陪伴者</span>
-                </div>
-                <p style="font-size: 0.88rem; color: rgba(231, 229, 228, 0.95); line-height: 1.65; font-weight: 300; margin: 0;">
-                  綠藝國際學苑創辦人。於觀音成道日出生，幼年深結佛緣，長期研討宗教信仰與生命密碼；曾任科技企業工程主管與國際園藝治療師，走過生死無常與至親病榻感悟，深信修行在日常柴米油鹽中，以觀音慈悲心法結合理性邏輯與自然調頻，陪你找回靈魂的原廠設定。
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <a href="https://line.me/R/ti/p/@mir4855b" target="_blank" style="display: block; text-decoration: none; padding: 1.15rem 1rem; border-radius: 14px; background: rgba(6, 95, 70, 0.6); border: 1px solid rgba(52, 211, 153, 0.35); margin-bottom: 1.5rem; transition: background 0.2s ease;">
-            <div style="font-size: 0.82rem; font-weight: 600; color: #6EE7B7; margin-bottom: 0.3rem;">
-              💬 綠藝漫活居 官方 LINE@
-            </div>
-            <div style="font-size: 1.05rem; font-weight: bold; color: #FFFFFF; margin-bottom: 0.35rem; line-height: 1.4;">
-              點此進入心靈導航站｜領取免費測算・預約諮詢・探索新書作品
-            </div>
-            <div style="font-size: 0.82rem; color: rgba(214, 211, 209, 0.9); font-weight: 300;">
-              加入後輸入對應關鍵字即可取得你所需要的資訊
-            </div>
-          </a>
-
-          <div style="padding-top: 0.75rem; border-top: 1px solid rgba(16, 185, 129, 0.25);">
-            <p style="font-size: 0.85rem; color: rgba(209, 250, 229, 0.85); line-height: 1.6; font-weight: 300; margin: 0 0 0.85rem 0;">
-              這款免費靈籤與心靈工具由老臣持續自主研發與維運。<br>
-              若這份陪伴對你有所啟發，歡迎隨緣贊助，護持更多心靈工具持續誕生。
-            </p>
-            <a href="https://line.me/R/ti/p/@mir4855b" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; border-radius: 9999px; background: rgba(253, 230, 138, 0.12); color: #FDE68A; border: 1px solid rgba(253, 230, 138, 0.4); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: background 0.2s ease;">
-              <span>☕</span> 隨喜支持・前往 LINE@ 輸入「3」贊助老臣持續研發
-            </a>
-          </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("---")
-        st.markdown("### 🧭 渴望更完整的生命地圖與深度陪伴？")
-        
-        col_a, col_b = st.columns(2)
-        with col_a:
-            st.markdown("""
-            #### 方案一：【靈魂初見】生命密碼核心特質簡析（體驗版）
-            * **適合對象：** 初次接觸、想快速了解核心天賦，或想知道自己為什麼常常內耗的你。
-            * **我想對你說：** 這是一場你與內在靈魂的第一次正式見面，我會引導你撥開迷霧，看看自己最真實的本質色調。
-            
-            **✨ 三大核心簡析：**
-            * **命宮守護星（天賦與盲點）：** 找到靈魂主角，看見默默守護你的穩定力量。
-            * **內外在特質（性格優缺點）：** 看懂外在展現的堅強，也溫柔擁抱內心深處的柔軟。
-            * **內在格局（社會定位）：** 讀懂與世界相處的節奏，找到最自在、不委屈的位置。
-            """)
-            st.link_button("👉 預約【靈魂初見】體驗版", "https://vocus.cc/salon/LUYILIFE/products/luyilife02", use_container_width=True)
-            
-        with col_b:
-            st.markdown("""
-            #### 方案二：【人生導航】你的專屬生命使用手冊（完整版）
-            * **適合對象：** 面對人生十字路口、職場迷惘、感情卡關、家庭和諧，或渴望得到具體調頻處方的你。
-            * **我想對你說：** 這是一場全方位的生命校準大工程。除了認識設定，我更會為你開立一份結合「動、靜、時、位」的專屬能量處方。
-            
-            **📜 五大核心導航指南：**
-            1. 🧩 **全盤性格解密** ｜ 命宮守護星 ✕ 內外性格 ✕ 格局合盤，看懂天賦與盲點，不再自己打架
-            2. 🌿 **健康體質覺察** ｜ 從先天五行精準解析，提早看懂需要溫柔關注的身心部位
-            3. 🚀 **職涯潛能激發** ｜ 解讀靈魂原廠設定，找到最順應天賦、不委屈自己的事業發揮舞台
-            4. 🧭 **本命氣場導航** ｜ 鎖定專屬招財與文昌方位，讓你的努力與心力精準對焦
-            5. 🪴 **綠植動靜處方** ｜ 整合靜心書寫與五行植物能量，打造屬於你的居家心靈森林
-            """)
-            st.link_button("👉 預約【人生導航】完整版", "https://vocus.cc/salon/LUYILIFE/products/luyilife03", use_container_width=True)
-        
-        st.markdown("---")
-        st.markdown("""
-        #### 🌱 【30天找回自己】深度陪跑諮詢計畫
-        > 老臣親自 1 對 1 陪跑、靜心書寫引導、客製專屬綠植調頻及完整生命使用手冊、出版書籍陪伴輔助等心靈工具。（*為確保陪伴品質，採審查制，請先填寫評估問卷看是否適合由老臣來陪跑*）
-        """)
-        st.link_button("📝 加入官方LINE填寫 30 天陪跑評估問卷", LINE_OFFICIAL_URL, use_container_width=True)
-
     st.markdown("---")
-    st.caption("綠藝國際學苑 ╳ 老臣聊心室 LUYILIFE © 2026 ｜ 聽你的心，陪你調頻 ｜ 設計者：陳信忠 (老臣/Alan)")
+    st.markdown("### 🧭 渴望更完整的生命地圖與深度陪伴？")
+    
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.markdown("""
+        #### 方案一：【靈魂初見】生命密碼核心特質簡析（體驗版）
+        * **適合對象：** 初次接觸、想快速了解核心天賦，或想知道自己為什麼常常內耗的你。
+        * **我想對你說：** 這是一場你與內在靈魂的第一次正式見面，我會引導你撥開迷霧，看看自己最真實的本質色調。
+        
+        **✨ 三大核心簡析：**
+        * **命宮守護星（天賦與盲點）：** 找到靈魂主角，看見默默守護你的穩定力量。
+        * **內外在特質（性格優缺點）：** 看懂外在展現的堅強，也溫柔擁抱內心深處的柔軟。
+        * **內在格局（社會定位）：** 讀懂與世界相處的節奏，找到最自在、不委屈的位置。
+        """)
+        st.link_button("👉 預約【靈魂初見】體驗版", "https://vocus.cc/salon/LUYILIFE/products/luyilife02", use_container_width=True)
+        
+    with col_b:
+        st.markdown("""
+        #### 方案二：【人生導航】你的專屬生命使用手冊（完整版）
+        * **適合對象：** 面對人生十字路口、職場迷惘、感情卡關、家庭和諧，或渴望得到具體調頻處方的你。
+        * **我想對你說：** 這是一場全方位的生命校準大工程。除了認識設定，我更會為你開立一份結合「動、靜、時、位」的專屬能量處方。
+        
+        **📜 五大核心導航指南：**
+        1. 🧩 **全盤性格解密** ｜ 命宮守護星 ✕ 內外性格 ✕ 格局合盤，看懂天賦與盲點，不再自己打架
+        2. 🌿 **健康體質覺察** ｜ 從先天五行精準解析，提早看懂需要溫柔關注的身心部位
+        3. 🚀 **職涯潛能激發** ｜ 解讀靈魂原廠設定，找到最順應天賦、不委屈自己的事業發揮舞台
+        4. 🧭 **本命氣場導航** ｜ 鎖定專屬招財與文昌方位，讓你的努力與心力精準對焦
+        5. 🪴 **綠植動靜處方** ｜ 整合靜心書寫與五行植物能量，打造屬於你的居家心靈森林
+        """)
+        st.link_button("👉 預約【人生導航】完整版", "https://vocus.cc/salon/LUYILIFE/products/luyilife03", use_container_width=True)
+    
+    st.markdown("---")
+    st.markdown("""
+    #### 🌱 【30天找回自己】深度陪跑諮詢計畫
+    > 老臣親自 1 對 1 陪跑、靜心書寫引導、客製專屬綠植調頻及完整生命使用手冊、出版書籍陪伴輔助等心靈工具。（*為確保陪伴品質，採審查制，請先填寫評估問卷看是否適合由老臣來陪跑*）
+    """)
+    st.link_button("📝 加入官方LINE填寫 30 天陪跑評估問卷", LINE_OFFICIAL_URL, use_container_width=True)
 
-except Exception as global_err:
-    st.error(f"⚠️ 系統處理時發生異常，請重新整理頁面。錯誤訊息：{global_err}")
-    with st.expander("🛠️ 查看詳細錯誤資訊（可截圖反饋給老臣）："):
-        st.code(traceback.format_exc())
+st.markdown("---")
+st.caption("綠藝國際學苑 ╳ 老臣聊心室 LUYILIFE © 2026 ｜ 聽你的心，陪你調頻 ｜ 設計者：陳信忠 (老臣/Alan)")
