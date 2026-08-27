@@ -279,17 +279,18 @@ if st.session_state.calculated:
     </div>
     """, unsafe_allow_html=True)
     
-    # 底部心靈共振與行動呼籲模組
+    # 底部心靈共振與行動呼籲模組（四維整合統一版）
     st.markdown("""
-    <div style="margin-top: 3rem; padding: 2rem 1.5rem; background-color: rgba(35, 71, 50, 0.95); border-radius: 18px; border: 1px solid rgba(16, 185, 129, 0.25); color: #F5F5F4; box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.25); max-width: 680px; margin-left: auto; margin-right: auto; text-align: center;">
+    <div style="margin-top: 3.5rem; padding: 2rem 1.5rem; background-color: rgba(35, 71, 50, 0.95); border-radius: 18px; border: 1px solid rgba(16, 185, 129, 0.25); color: #F5F5F4; box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.25); max-width: 680px; margin-left: auto; margin-right: auto; text-align: center;">
+
       <div style="margin-bottom: 1.5rem;">
-        <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🌱</div>
+        <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🌿</div>
         <h3 style="font-size: 1.25rem; font-weight: bold; color: #FDE68A; letter-spacing: 0.5px; margin: 0 0 0.6rem 0; line-height: 1.4;">
           受過傷的地方，細心灌溉，依然能長出翠綠的風景
         </h3>
         <p style="font-size: 0.95rem; color: rgba(209, 250, 229, 0.9); line-height: 1.65; font-weight: 300; margin: 0;">
-          在這個快節奏的時代，拼命追趕世界太累了。<br>
-          如果今天的生命密碼指引曾為你帶來一絲安頓，請記得：今天，先溫柔地接住你自己。
+          心靈陪伴指引只是看見內在設定的起點，<br>
+          真正的智慧在於回到日常生活，溫柔地接住自己。
         </p>
       </div>
 
@@ -301,12 +302,13 @@ if st.session_state.calculated:
             🌿
           </div>
           <div>
-            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.35rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem;">
               <span style="font-size: 1.05rem; font-weight: bold; color: #FDE68A;">陳信忠（老臣 / Alan）</span>
               <span style="font-size: 0.75rem; padding: 2px 10px; border-radius: 9999px; background: rgba(6, 78, 59, 0.85); color: #A7F3D0; border: 1px solid rgba(5, 150, 105, 0.4); font-weight: 500;">心靈陪伴者</span>
+              <span style="font-size: 0.75rem; padding: 2px 10px; border-radius: 9999px; background: rgba(6, 78, 59, 0.85); color: #A7F3D0; border: 1px solid rgba(5, 150, 105, 0.4); font-weight: 500;">國際園藝治療師</span>
             </div>
             <p style="font-size: 0.88rem; color: rgba(231, 229, 228, 0.95); line-height: 1.65; font-weight: 300; margin: 0;">
-              綠藝國際學苑創辦人。於觀音成道日出生，幼年深結佛緣，長期研討宗教信仰與生命密碼；曾任科技企業工程主管與國際園藝治療師，走過生死無常與至親病榻感悟，深信修行在日常柴米油鹽中，以觀音慈悲心法結合理性邏輯與自然調頻，陪你找回靈魂的原廠設定。
+              綠藝國際學苑創辦人暨「老臣聊心室」心靈陪伴者；老臣於觀音成道日出生，幼年深結佛緣，長期研討宗教信仰與生命密碼；曾任科技企業工程主管與國際園藝治療師。深信修行在日常柴米油鹽中，以「觀音心法 × 靜心書寫 × 生命密碼 × 園藝療法」結合理性邏輯與自然調頻，陪你找回靈魂的原廠設定。
             </p>
           </div>
         </div>
@@ -317,63 +319,25 @@ if st.session_state.calculated:
           💬 綠藝漫活居 官方 LINE@
         </div>
         <div style="font-size: 1.05rem; font-weight: bold; color: #FFFFFF; margin-bottom: 0.35rem; line-height: 1.4;">
-          點此進入心靈導航站｜領取免費測算・預約諮詢・探索新書作品
+          點此進入心靈導航站｜領取深度指引・預約諮詢・探索新書作品
         </div>
         <div style="font-size: 0.82rem; color: rgba(214, 211, 209, 0.9); font-weight: 300;">
-          加入後輸入對應關鍵字即可取得你所需要的資訊
+          加入後輸入對應關鍵字即可取得所需資源
         </div>
       </a>
 
       <div style="padding-top: 0.75rem; border-top: 1px solid rgba(16, 185, 129, 0.25);">
         <p style="font-size: 0.85rem; color: rgba(209, 250, 229, 0.85); line-height: 1.6; font-weight: 300; margin: 0 0 0.85rem 0;">
-          這款免費靈籤與心靈工具由老臣持續自主研發與維運。<br>
-          若這份陪伴對你有所啟發，歡迎隨緣贊助，護持更多心靈工具持續誕生。
+          這套心靈數位工具由老臣持續自主研發與維運。<br>
+          若這份陪伴為你帶來安頓，歡迎隨喜贊助，護持更多心靈工具持續誕生。
         </p>
         <a href="https://line.me/R/ti/p/@mir4855b" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; border-radius: 9999px; background: rgba(253, 230, 138, 0.12); color: #FDE68A; border: 1px solid rgba(253, 230, 138, 0.4); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: background 0.2s ease;">
-          <span>☕</span> 隨喜支持・前往 LINE@ 輸入「3」贊助老臣持續研發
+          <span>🍵</span> 隨喜支持・前往 LINE@ 輸入「3」贊助老臣持續研發
         </a>
       </div>
+
     </div>
     """, unsafe_allow_html=True)
-
-    st.markdown("---")
-    st.markdown("### 🧭 渴望更完整的生命地圖與深度陪伴？")
-    
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.markdown("""
-        #### 方案一：【靈魂初見】生命密碼核心特質簡析（體驗版）
-        * **適合對象：** 初次接觸、想快速了解核心天賦，或想知道自己為什麼常常內耗的你。
-        * **我想對你說：** 這是一場你與內在靈魂的第一次正式見面，我會引導你撥開迷霧，看看自己最真實的本質色調。
-        
-        **✨ 三大核心簡析：**
-        * **命宮守護星（天賦與盲點）：** 找到靈魂主角，看見默默守護你的穩定力量。
-        * **內外在特質（性格優缺點）：** 看懂外在展現的堅強，也溫柔擁抱內心深處的柔軟。
-        * **內在格局（社會定位）：** 讀懂與世界相處的節奏，找到最自在、不委屈的位置。
-        """)
-        st.link_button("👉 預約【靈魂初見】體驗版", "https://vocus.cc/salon/LUYILIFE/products/luyilife02", use_container_width=True)
-        
-    with col_b:
-        st.markdown("""
-        #### 方案二：【人生導航】你的專屬生命使用手冊（完整版）
-        * **適合對象：** 面對人生十字路口、職場迷惘、感情卡關、家庭和諧，或渴望得到具體調頻處方的你。
-        * **我想對你說：** 這是一場全方位的生命校準大工程。除了認識設定，我更會為你開立一份結合「動、靜、時、位」的專屬能量處方。
-        
-        **📜 五大核心導航指南：**
-        1. 🧩 **全盤性格解密** ｜ 命宮守護星 ✕ 內外性格 ✕ 格局合盤，看懂天賦與盲點，不再自己打架
-        2. 🌿 **健康體質覺察** ｜ 從先天五行精準解析，提早看懂需要溫柔關注的身心部位
-        3. 🚀 **職涯潛能激發** ｜ 解讀靈魂原廠設定，找到最順應天賦、不委屈自己的事業發揮舞台
-        4. 🧭 **本命氣場導航** ｜ 鎖定專屬招財與文昌方位，讓你的努力與心力精準對焦
-        5. 🪴 **綠植動靜處方** ｜ 整合靜心書寫與五行植物能量，打造屬於你的居家心靈森林
-        """)
-        st.link_button("👉 預約【人生導航】完整版", "https://vocus.cc/salon/LUYILIFE/products/luyilife03", use_container_width=True)
-    
-    st.markdown("---")
-    st.markdown("""
-    #### 🌱 【30天找回自己】深度陪跑諮詢計畫
-    > 老臣親自 1 對 1 陪跑、靜心書寫引導、客製專屬綠植調頻及完整生命使用手冊、出版書籍陪伴輔助等心靈工具。（*為確保陪伴品質，採審查制，請先填寫評估問卷看是否適合由老臣來陪跑*）
-    """)
-    st.link_button("📝 加入官方LINE填寫 30 天陪跑評估問卷", LINE_OFFICIAL_URL, use_container_width=True)
 
 st.markdown("---")
 st.caption("綠藝國際學苑 ╳ 老臣聊心室 LUYILIFE © 2026 ｜ 聽你的心，陪你調頻 ｜ 設計者：陳信忠 (老臣/Alan)")
